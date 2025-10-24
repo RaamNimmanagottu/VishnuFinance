@@ -5,7 +5,7 @@ from dateutil.relativedelta import relativedelta
 
 class Customer(models.Model):
     hp_no = models.CharField(max_length=50, unique=True)
-    name = models.CharField(max_length=200)
+    customer_name = models.CharField(max_length=200)
     father_name = models.CharField(max_length=200, blank=True, null=True)
     address = models.TextField()
     village = models.CharField(max_length=200, blank=True, null=True)

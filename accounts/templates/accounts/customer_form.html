@@ -18,7 +18,8 @@
             <div class="card-body">
                 <div class="row g-3">
                     {% for field in form %}
-                        {% if field.name in "hp_no name father_name mobile address village guarantor_name guarantor_mobile" %}
+                        {% if field.name in "hp_no customer_name father_name mobile address village guarantor_name guarantor_mobile" %}
+
                         <div class="col-md-6">
                             <label class="form-label">{{ field.label }}</label>
                             {{ field|add_class:"form-control" }}
@@ -40,7 +41,7 @@
             <div class="card-body">
                 <div class="row g-3">
                     {% for field in form %}
-                        {% if field.name in "loan_amount interest_rate emi_amount duration_months start_date" %}
+                        {% if field.name in "loan_amount interest_rate emi_amount duration_months start_date emi_day" %}
                         <div class="col-md-6">
                             <label class="form-label">{{ field.label }}</label>
                             {{ field|add_class:"form-control" }}

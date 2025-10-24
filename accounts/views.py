@@ -14,13 +14,32 @@ def accounts(request):
 def customer_list(request):
     customers = Customer.objects.all()
     return render(request, 'accounts/customers.html', {'customers': customers})
+
 @login_required
 def customer_create(request):
     form = CustomerForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        return redirect('customers:customers')
-    return render(request, 'accounts/customer_form.html', {'form': form})
+
+    personal_fields = ['hp_no','customer_name','father_name','mobile','address','village','guarantor_name','guarantor_mobile']
+    loan_fields = ['loan_amount','interest_rate','emi_amount','duration_months','start_date','emi_day']
+    vehicle_fields = ['vehicle_type','vehicle_name','vehicle_model','engine_number','chasis_number','insurance']
+
+    context = {
+        'form': form,
+        'personal_fields': personal_fields,
+        'loan_fields': loan_fields,
+        'vehicle_fields': vehicle_fields,
+    }
+
+    if request.method == 'POST':
+        if form.is_valid():
+            form.save()
+            return redirect('customers:customers')
+        else:
+            # Print form errors for debugging
+            print("Form is invalid:", form.errors)
+
+    return render(request, 'accounts/customer_form.html', context)
+
 
 
 

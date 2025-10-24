@@ -7,7 +7,7 @@ class CustomerForm(forms.ModelForm):
         fields = '__all__'
         widgets = {
             'hp_no': forms.TextInput(attrs={'class': 'form-control'}),
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'customer_name': forms.TextInput(attrs={'class': 'form-control'}),
             'father_name': forms.TextInput(attrs={'class': 'form-control'}),
             'address': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
             'village': forms.TextInput(attrs={'class': 'form-control'}),

@@ -1,0 +1,151 @@
+{% extends "accounts/base.html" %}
+{% block title %}Customer Detail{% endblock %}
+{% block content %}
+
+<div class="container mt-4">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><span class="text-primary">{{ customer.name }}</span></h2>
+        <a href="{% url 'customers:customers' %}" class="btn btn-secondary">Back to Customers</a>
+    </div>
+
+    <!-- Personal & Loan Info -->
+    <div class="row mb-4 g-3">
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-primary text-white">
+                    <strong>Personal Info</strong>
+                </div>
+                <div class="card-body">
+                    <p><strong>HP No:</strong> {{ customer.hp_no }}</p>
+                    <p><strong>Father Name:</strong> {{ customer.father_name }}</p>
+                    <p><strong>Mobile:</strong> {{ customer.mobile }}</p>
+                    <p><strong>Address:</strong> {{ customer.address }}</p>
+                    <p><strong>Village:</strong> {{ customer.village }}</p>
+                    <p><strong>Guarantor:</strong> {{ customer.guarantor_name|default:"-" }} ({{ customer.guarantor_mobile|default:"-" }})</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-success text-white">
+                    <strong>Loan Info</strong>
+                </div>
+                <div class="card-body">
+                    <p><strong>Loan Amount:</strong> <span class="badge bg-info text-dark">{{ customer.loan_amount }}</span></p>
+                    <p><strong>Interest Rate:</strong> <span class="badge bg-warning text-dark">{{ customer.interest_rate }}%</span></p>
+                    <p><strong>EMI Amount:</strong> <span class="badge bg-primary">{{ customer.emi_amount }}</span></p>
+                    <p><strong>Duration:</strong> {{ customer.duration_months }} months</p>
+                    <p><strong>Start Date:</strong> {{ customer.start_date }}</p>
+                    <p><strong>Emi day :</strong> {{ customer.emi_day  }} of Every Month</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicle Info -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <strong>Vehicle Info</strong>
+                </div>
+                <div class="card-body">
+                    <div class="row g-3">
+                        <div class="col-md-4"><strong>Type:</strong> {{ customer.vehicle_type }}</div>
+                        <div class="col-md-4"><strong>Name:</strong> {{ customer.vehicle_name }}</div>
+                        <div class="col-md-4"><strong>Model:</strong> {{ customer.vehicle_model }}</div>
+                        <div class="col-md-4"><strong>Engine No:</strong> {{ customer.engine_number }}</div>
+                        <div class="col-md-4"><strong>Chasis No:</strong> {{ customer.chasis_number }}</div>
+                        <div class="col-md-4"><strong>Insurance:</strong> {{ customer.insurance }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Installments -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Installments</h4>
+        <a href="{% url 'customers:installment_create' customer.id %}" class="btn btn-success btn-sm">Add Installment</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Installment Date</th>
+                    <th>Paid Date</th>
+                    <th>Installment Due</th>
+                    <th>Paid Amount</th>
+                    <th>Balance Amount</th>
+                    <th>Remaining EMI</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for inst in customer.installments.all %}
+                <tr>
+                    <td>{{ inst.installment_date }}</td>
+                    <td>
+                        {% if inst.paid_date %}
+                            <span class="badge bg-success">{{ inst.paid_date }}</span>
+                        {% else %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ inst.installment_due }}</td>
+                    <td>{{ inst.paid_amount }}</td>
+                    <td>{{ inst.balance_amount }}</td>
+                    <td>{{ inst.remaining_emi }}</td>
+                    <td>{{ inst.remarks|default:"-" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center">No installments found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="card mt-4 shadow-sm">
+    <div class="card-header bg-primary text-white">
+        <strong>Loan EMI Schedule</strong>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-striped mb-0">
+            <thead class="bg-primary text-white">
+                <tr>
+                    <th>Installment No</th>
+                    <th>Due Date</th>
+                    <th>Principal (A)</th>
+                    <th>Interest (B)</th>
+                    <th>Total Payment (A+B)</th>
+                    <th>Balance</th>
+                    <th>Loan Paid To Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emi in emi_schedule %}
+                <tr>
+                    <td>{{ emi.installment_no }}</td>
+                    <td>{{ emi.date|date:"d M Y" }}</td>
+                    <td>{{ emi.principal }}</td>
+                    <td>{{ emi.interest }}</td>
+                    <td>{{ emi.total_payment }}</td>
+                    <td>{{ emi.balance }}</td>
+                    <td>{{ emi.loan_paid_to_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+</div>
+
+{% endblock %}

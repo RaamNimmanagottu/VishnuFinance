@@ -1,0 +1,87 @@
+{% extends "accounts/base.html" %}
+{% block title %}{{ form.instance.id|yesno:"Edit Customer,Add Customer" }}{% endblock %}
+{% block content %}
+{% load widget_tweaks %}
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">{{ form.instance.id|yesno:"Edit Customer,Add Customer" }}</h2>
+
+    <form method="POST" class="row g-3">
+        {% csrf_token %}
+
+        <!-- Personal Info Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <strong>Personal Info</strong>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    {% for field in form %}
+                        {% if field.name in "hp_no name father_name mobile address village guarantor_name guarantor_mobile" %}
+                        <div class="col-md-6">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field|add_class:"form-control" }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Loan Info Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+                <strong>Loan Info</strong>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    {% for field in form %}
+                        {% if field.name in "loan_amount interest_rate emi_amount duration_months start_date" %}
+                        <div class="col-md-6">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field|add_class:"form-control" }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicle Info Section -->
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white">
+                <strong>Vehicle Info</strong>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    {% for field in form %}
+                        {% if field.name in "vehicle_type vehicle_name vehicle_model engine_number chasis_number insurance" %}
+                        <div class="col-md-6">
+                            <label class="form-label">{{ field.label }}</label>
+                            {{ field|add_class:"form-control" }}
+                            {% if field.errors %}
+                                <div class="text-danger small">{{ field.errors }}</div>
+                            {% endif %}
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 d-flex justify-content-end mt-3">
+            <button type="submit" class="btn btn-success me-2">Save</button>
+            <a href="{% url 'customers:customers' %}" class="btn btn-danger">Cancel</a>
+        </div>
+
+    </form>
+</div>
+
+{% endblock %}

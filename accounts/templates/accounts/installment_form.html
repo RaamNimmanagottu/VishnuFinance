@@ -1,0 +1,46 @@
+{% extends 'accounts/base.html' %}
+{% block title %}Add Installment{% endblock %}
+{% block content %}
+<h2>Add Installment for {{ customer.name }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+        {{ form.customer_name.label_tag }}
+        {{ form.customer_name }}
+    </div>
+    
+    <div class="mb-3">
+        {{ form.installment_date.label_tag }}
+        {{ form.installment_date }}
+    </div>
+    
+    <div class="mb-3">
+        {{ form.paid_date.label_tag }}
+        {{ form.paid_date }}
+    </div>
+    
+    <div class="mb-3">
+        {{ form.installment_due.label_tag }}
+        {{ form.installment_due }}
+    </div>
+    
+    <div class="mb-3">
+        {{ form.paid_amount.label_tag }}
+        {{ form.paid_amount }}
+    </div>
+    
+    <div class="mb-3">
+        {{ form.balance_amount.label_tag }}
+        {{ form.balance_amount }}
+    </div>
+    
+    <div class="mb-3">
+        {{ form.remarks.label_tag }}
+        {{ form.remarks }}
+    </div>
+    
+    <button type="submit" class="btn btn-success">Save</button>
+    <a href="{% url 'customers:customer_detail' customer.id %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

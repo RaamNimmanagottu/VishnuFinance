@@ -23,6 +23,7 @@ class Customer(models.Model):
     # Vehicle details
     vehicle_type = models.CharField(max_length=100, blank=True, null=True)
     vehicle_name = models.CharField(max_length=100, blank=True, null=True)
+    vehicle_number = models.CharField(max_length=100, blank=True, null=True)
     vehicle_model = models.CharField(max_length=100, blank=True, null=True)
     engine_number = models.CharField(max_length=100, blank=True, null=True)
     chasis_number = models.CharField(max_length=100, blank=True, null=True)
@@ -96,7 +97,7 @@ class Customer(models.Model):
         return schedule
 
     def __str__(self):
-        return f"{self.name} ({self.hp_no})"
+        return f"{self.customer_name} ({self.hp_no})"
 
 
 class Installment(models.Model):

@@ -5,7 +5,13 @@
 
 <div class="container mt-4">
 
-    <h2 class="text-primary mb-4">{{ form.instance.id|yesno:"Edit Customer,Add Customer" }}</h2>
+    <h2 class="text-primary mb-4">
+    {% if form.instance.id %}
+        Edit Customer {{ form.instance.customer_name }}
+    {% else %}
+        Add Customer
+    {% endif %}
+</h2>
 
     <form method="POST" class="row g-3">
         {% csrf_token %}
@@ -17,20 +23,74 @@
             </div>
             <div class="card-body">
                 <div class="row g-3">
-                    {% for field in form %}
-                        {% if field.name in "hp_no customer_name father_name mobile address village guarantor_name guarantor_mobile" %}
 
-                        <div class="col-md-6">
-                            <label class="form-label">{{ field.label }}</label>
-                            {{ field|add_class:"form-control" }}
-                            {% if field.errors %}
-                                <div class="text-danger small">{{ field.errors }}</div>
-                            {% endif %}
-                        </div>
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.hp_no.label }}</label>
+                        {{ form.hp_no|add_class:"form-control" }}
+                        {% if form.hp_no.errors %}
+                            <div class="text-danger small">{{ form.hp_no.errors }}</div>
                         {% endif %}
-                    {% endfor %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.customer_name.label }}</label>
+                        {{ form.customer_name|add_class:"form-control" }}
+                        {% if form.customer_name.errors %}
+                            <div class="text-danger small">{{ form.customer_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.father_name.label }}</label>
+                        {{ form.father_name|add_class:"form-control" }}
+                        {% if form.father_name.errors %}
+                            <div class="text-danger small">{{ form.father_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.mobile.label }}</label>
+                        {{ form.mobile|add_class:"form-control" }}
+                        {% if form.mobile.errors %}
+                            <div class="text-danger small">{{ form.mobile.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.address.label }}</label>
+                        {{ form.address|add_class:"form-control" }}
+                        {% if form.address.errors %}
+                            <div class="text-danger small">{{ form.address.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.village.label }}</label>
+                        {{ form.village|add_class:"form-control" }}
+                        {% if form.village.errors %}
+                            <div class="text-danger small">{{ form.village.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.guarantor_name.label }}</label>
+                        {{ form.guarantor_name|add_class:"form-control" }}
+                        {% if form.guarantor_name.errors %}
+                            <div class="text-danger small">{{ form.guarantor_name.errors }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">{{ form.guarantor_mobile.label }}</label>
+                        {{ form.guarantor_mobile|add_class:"form-control" }}
+                        {% if form.guarantor_mobile.errors %}
+                            <div class="text-danger small">{{ form.guarantor_mobile.errors }}</div>
+                        {% endif %}
+                    </div>
+
                 </div>
             </div>
+
         </div>
 
         <!-- Loan Info Section -->
@@ -63,7 +123,7 @@
             <div class="card-body">
                 <div class="row g-3">
                     {% for field in form %}
-                        {% if field.name in "vehicle_type vehicle_name vehicle_model engine_number chasis_number insurance" %}
+                        {% if field.name in "vehicle_type vehicle_name vehicle_number vehicle_model engine_number chasis_number insurance" %}
                         <div class="col-md-6">
                             <label class="form-label">{{ field.label }}</label>
                             {{ field|add_class:"form-control" }}

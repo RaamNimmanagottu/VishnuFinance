@@ -22,6 +22,7 @@ class CustomerForm(forms.ModelForm):
 
             'vehicle_type': forms.TextInput(attrs={'class': 'form-control'}),
             'vehicle_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'vehicle_number': forms.TextInput(attrs={'class': 'form-control'}),
             'vehicle_model': forms.TextInput(attrs={'class': 'form-control'}),
             'engine_number': forms.TextInput(attrs={'class': 'form-control'}),
             'chasis_number': forms.TextInput(attrs={'class': 'form-control'}),

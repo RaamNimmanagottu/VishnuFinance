@@ -1,14 +1,11 @@
 {% extends 'accounts/base.html' %}
 {% block title %}Add Installment{% endblock %}
 {% block content %}
-<h2>Add Installment for {{ customer.name }}</h2>
+<h2>Add Installment for {{ customer.customer_name }}</h2>
 
 <form method="post">
     {% csrf_token %}
-    <div class="mb-3">
-        {{ form.customer_name.label_tag }}
-        {{ form.customer_name }}
-    </div>
+    
     
     <div class="mb-3">
         {{ form.installment_date.label_tag }}

@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
+from django.db.models import Q
 
 @login_required
 def accounts(request):
@@ -14,6 +15,7 @@ def accounts(request):
 def customer_list(request):
     customers = Customer.objects.all()
     return render(request, 'accounts/customers.html', {'customers': customers})
+
 
 @login_required
 def customer_create(request):
@@ -57,7 +59,7 @@ def customer_detail(request, pk):
 @login_required
 def installment_create(request, customer_id):
     customer = get_object_or_404(Customer, pk=customer_id)
-    form = InstallmentForm(request.POST or None, initial={'customer_name': customer.name})
+    form = InstallmentForm(request.POST or None, initial={'name': customer.customer_name})
     
     if form.is_valid():
         inst = form.save(commit=False)
@@ -72,10 +74,16 @@ def installment_create(request, customer_id):
 def customer_edit(request, pk):
     customer = get_object_or_404(Customer, pk=pk)
     form = CustomerForm(request.POST or None, instance=customer)
-    if form.is_valid():
-        form.save()
-        return redirect('customers:customers')
+
+    if request.method == "POST":
+        if form.is_valid():
+            form.save()
+            return redirect('customers:customers')
+        else:
+            print("Form errors:", form.errors)  # <-- check validation errors
+
     return render(request, 'accounts/customer_form.html', {'form': form})
+
 
 
 @login_required

@@ -1,5 +1,6 @@
 from django import forms
 from .models import Customer, Installment
+from datetime import date
 
 class CustomerForm(forms.ModelForm):
     class Meta:
@@ -18,7 +19,13 @@ class CustomerForm(forms.ModelForm):
             'interest_rate': forms.NumberInput(attrs={'class': 'form-control'}),
             'emi_amount': forms.NumberInput(attrs={'class': 'form-control'}),
             'duration_months': forms.NumberInput(attrs={'class': 'form-control'}),
-            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'start_date': forms.DateInput(
+                attrs={
+                    'class': 'form-control',
+                    'type': 'date'
+                     # 'max': date.today().isoformat()  # restrict to today or earlier
+                }
+            ),
 
             'vehicle_type': forms.TextInput(attrs={'class': 'form-control'}),
             'vehicle_name': forms.TextInput(attrs={'class': 'form-control'}),
@@ -40,8 +47,12 @@ class InstallmentForm(forms.ModelForm):
         model = Installment
         fields = ['installment_date', 'paid_date', 'installment_due', 'paid_amount', 'balance_amount', 'remarks']  # remove customer from here
         widgets = {
-            'installment_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'paid_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'installment_date': forms.DateInput(
+                attrs={'class': 'form-control', 'type': 'date', 'max': date.today().isoformat()}
+            ),
+            'paid_date': forms.DateInput(
+                attrs={'class': 'form-control', 'type': 'date', 'max': date.today().isoformat()}
+            ),
             'installment_due': forms.NumberInput(attrs={'class': 'form-control'}),
             'paid_amount': forms.NumberInput(attrs={'class': 'form-control'}),
             'balance_amount': forms.NumberInput(attrs={'class': 'form-control'}),

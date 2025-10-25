@@ -1,0 +1,19 @@
+push changes to git
+
+git clone https://github.com/RaamNimmanagottu/VishnuFinance.git
+
+git status
+
+
+git add .
+git commit -m "Your commit message"
+git push origin main
+
+
+# python anywhere pull
+
+git pull origin main
+
+python manage.py makemigrations
+
+python manage.py migrate

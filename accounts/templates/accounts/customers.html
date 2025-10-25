@@ -23,7 +23,7 @@
                             <th>Mobile</th>
                             <th>Loan Amount</th>
                             <th>EMI</th>
-                            <th>Duration (Months)</th>
+                            <th>Registration</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -35,7 +35,7 @@
                             <td>{{ customer.mobile }}</td>
                             <td>{{ customer.loan_amount }}</td>
                             <td>{{ customer.emi_amount }}</td>
-                            <td>{{ customer.duration_months }}</td>
+                            <td>{{ customer.vehicle_number }}</td>
                             <td>
                                 <a href="{% url 'customers:customer_detail' customer.id %}" class="btn btn-primary btn-sm">View</a>
                                 <a href="{% url 'customers:customer_edit' customer.id %}" class="btn btn-warning btn-sm">Edit</a>
